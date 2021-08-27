@@ -61,17 +61,26 @@ newdat <- dat[,
               by = .(Dest)]
 
 newdat[order(Dest)]
+
+# Chaining is done in datatable by using more square brackets
+newdat <- dat[order(Dest),
+              .N,
+              by = .(Dest)][order(Dest)]
+#a better way to do  
 newdat <- dat[,
               .N,
               by = .(Dest)][order(Dest)]
+#dat[so something][do something]
+
 newdat <- dat[,
               .N,
               by = .(Dest)][order(-Dest)]
 
+#- We can use expressions in the by
 newdat <- dat[,
               .N,
-              .(DepDelay > 0,ArrDelay > 0)]
-
+              .(DepDelay > 0,ArrDelay > 0)] #logic operator 
+  
 
 newdat <- dat[,
               lapply(.SD,mean),
